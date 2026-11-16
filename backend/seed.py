@@ -8,7 +8,7 @@ from pathlib import Path
 
 from backend.database import SessionLocal, init_db
 from backend.models import (
-    Appointment, BodyAssessment, BookingStatus, DeliveryStatus, ExternalBooking,
+    Appointment, BodyAssessment, BookingStatus, CheckIn, DeliveryStatus, ExternalBooking,
     LabResult, Meal, MedicationDelivery, MedicationLog, RehabSession, SymptomLog, User, UserRole,
 )
 from backend.services import medication_service, patient_service
@@ -203,6 +203,32 @@ def _seed_market(db, patient: User) -> None:
     db.commit()
 
 
+def _seed_checkins(db, patient: User) -> None:
+    """Two weeks of Daily Check-ins for Sara: a steady baseline, then resting
+    heart rate creeping up over the last few days — so the personal-baseline
+    drift flag and the Primary Carer / doctor trend view have a real story."""
+    if patient.email != "sara@example.com":
+        return
+    if db.query(CheckIn).filter(CheckIn.patient_id == patient.id).count():
+        return
+    now = datetime.utcnow().replace(hour=8, minute=30, second=0, microsecond=0)
+    # (days_ago, heart_rate, breathing_rate, posture %)
+    days = [
+        (14, 66, 15, 82), (13, 67, 14, 80), (12, 65, 15, 84), (11, 66, 15, 79),
+        (10, 68, 16, 81), (9, 66, 15, 83), (8, 67, 15, 78), (7, 68, 15, 80),
+        (6, 69, 15, 76), (5, 71, 16, 74), (4, 72, 16, 72), (3, 74, 16, 70),
+        (2, 75, 17, 71), (1, 76, 16, 68),
+    ]
+    for days_ago, hr, rr, posture in days:
+        db.add(CheckIn(
+            patient_id=patient.id, created_at=now - timedelta(days=days_ago),
+            heart_rate=hr, heart_rate_conf=0.93, respiratory_rate=rr, respiratory_rate_conf=0.88,
+            source="demo", posture_score=posture,
+            sit_to_stand_reps=5, shoulder_roll_reps=8,
+        ))
+    db.commit()
+
+
 def _seed_history(db, patient: User) -> None:
     spec = HISTORY.get(patient.email)
     if not spec:
@@ -290,6 +316,7 @@ def seed() -> None:
             _seed_body_maps(db, patient)
             _seed_meals(db, patient)
             _seed_market(db, patient)
+            _seed_checkins(db, patient)
             print(f"✓ Seeded patient {patient.name} (id={patient.id})")
 
         _seed_staff(db)

@@ -320,3 +320,33 @@ class MedicationDelivery(Base):
     created_by: Mapped[str] = mapped_column(String(24), default="patient")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class CheckIn(Base):
+    """One Daily Check-in: camera wellness estimates + posture/movement summary.
+
+    Only these numbers are stored. Video never leaves the device for posture,
+    and is never stored for vitals.
+    """
+
+    __tablename__ = "checkins"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    patient_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, index=True)
+
+    # Wellness estimates (not medical measurements). Confidence is 0..1.
+    heart_rate: Mapped[float | None] = mapped_column(Float, nullable=True)
+    heart_rate_conf: Mapped[float | None] = mapped_column(Float, nullable=True)
+    respiratory_rate: Mapped[float | None] = mapped_column(Float, nullable=True)
+    respiratory_rate_conf: Mapped[float | None] = mapped_column(Float, nullable=True)
+    hrv_sdnn: Mapped[float | None] = mapped_column(Float, nullable=True)
+    hrv_conf: Mapped[float | None] = mapped_column(Float, nullable=True)
+    source: Mapped[str] = mapped_column(String(40), default="vitallens")  # vitallens | pos-fallback | demo
+
+    # Posture & movement (all computed on-device).
+    posture_score: Mapped[int | None] = mapped_column(Integer, nullable=True)  # 0-100, % of time upright
+    sit_to_stand_reps: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    shoulder_roll_reps: Mapped[int | None] = mapped_column(Integer, nullable=True)
+
+    drift_alerted: Mapped[bool] = mapped_column(Boolean, default=False)

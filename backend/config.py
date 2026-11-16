@@ -24,6 +24,11 @@ class Settings(BaseSettings):
     # false to use the full fan-out pipeline (needs a higher quota / paid tier).
     single_call_mode: bool = True
 
+    # VitalLens (camera vitals). Kept server-side: the browser talks to our
+    # /checkin/vitallens proxy, which adds the key. Empty = open-source fallback.
+    vitallens_api_key: str = ""
+    vitallens_api_base: str = "https://api.rouast.com/vitallens-v3"
+
     # Auth
     jwt_secret: str = "change_me"
     jwt_algorithm: str = "HS256"
