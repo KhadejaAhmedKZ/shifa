@@ -28,6 +28,8 @@ import {
   BookOpen,
   Truck,
   HeartHandshake,
+  ScanFace,
+  Info,
 } from "lucide-react";
 
 export const NAV = {
@@ -36,6 +38,7 @@ export const NAV = {
       label: "Main",
       items: [
         { to: "/", icon: Home, label: "Home", end: true },
+        { to: "/check-in", icon: ScanFace, label: "Daily Check-in", end: true },
         { to: "/coordinator", icon: Sparkles, label: "Care Coordinator" },
         { to: "/chat", icon: MessageCircleMore, label: "AI Assistant" },
         { to: "/body-map", icon: PersonStanding, label: "Body Map" },
@@ -108,6 +111,7 @@ export function flatNav(role) {
   const groups = NAV[role] || NAV.patient;
   const items = groups.flatMap((g) => g.items);
   items.push({ to: "/accessibility", icon: Accessibility, label: "Accessibility" });
+  items.push({ to: "/check-in/about", icon: Info, label: "Check-in: how it works" });
   items.push({ to: "/privacy", icon: Lock, label: "Security & Privacy" });
   return items;
 }

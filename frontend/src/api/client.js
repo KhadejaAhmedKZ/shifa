@@ -2,6 +2,7 @@
 // Uses the Vite dev proxy (/api -> :8000) by default.
 
 const BASE = import.meta.env.VITE_API_URL || "/api";
+export const API_BASE = BASE;
 
 const NETWORK_ERROR_MSG =
   "Can't reach the server — it may be waking up (free hosting sleeps when idle). " +
@@ -170,6 +171,13 @@ export const api = {
   labs: (pid) => request(`/labs/patients/${pid}`),
   addLab: (payload) => request("/labs", { method: "POST", body: payload }),
   explainLabs: (pid) => request(`/labs/patients/${pid}/explain`),
+
+  // Daily Check-in (camera vitals + posture/movement)
+  checkinConfig: () => request("/checkin/config"),
+  saveCheckin: (payload) => request("/checkin", { method: "POST", body: payload }),
+  checkinHistory: (pid) => request(`/checkin/patients/${pid}`),
+  explainCheckin: (id, lang) => request(`/checkin/${id}/explain`, { method: "POST", body: { lang } }),
+  checkinDrift: () => request("/checkin/drift"),
 
   // Care modules
   careModules: () => request("/care/modules"),

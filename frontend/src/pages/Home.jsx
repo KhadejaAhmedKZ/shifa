@@ -10,6 +10,7 @@ import { SkeletonStatGrid, SkeletonCard } from "../components/Skeleton.jsx";
 import { extractVital, computeHealthScore } from "../utils/wellness.js";
 
 const QUICK = [
+  { to: "/check-in", icon: "🩺", title: "Daily Check-in", sub: "30-sec camera wellness scan" },
   { to: "/chat", icon: "💬", title: "Ask the AI", sub: "Clinical, appointments & more" },
   { to: "/appointments", icon: "📅", title: "Appointments", sub: "Book or manage visits" },
   { to: "/medications", icon: "💊", title: "Medications", sub: "Schedule & adherence" },

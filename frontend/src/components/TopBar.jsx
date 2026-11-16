@@ -9,6 +9,8 @@ import { flatNav } from "../nav.js";
 import AccessibilityBar from "./AccessibilityBar.jsx";
 
 const TITLES = {
+  "/check-in": "Daily Check-in",
+  "/check-in/about": "How the Check-in works",
   "/": "Welcome",
   "/chat": "AI Assistant",
   "/dashboard": "My Health",

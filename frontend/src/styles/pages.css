@@ -492,3 +492,59 @@
   .rehab-duo { grid-template-columns: 1fr; }
   .rehab-stats { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ============ Daily Check-in ============ */
+.checkin-banner, .checkin-disclaimer { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--warning-strong); }
+.checkin-banner { background: var(--warning-100); border: 1px solid var(--warning); border-radius: var(--radius-sm); padding: 10px 14px; font-size: .92rem; }
+.checkin-disclaimer { font-size: .8rem; margin-top: 12px; }
+.checkin-lang { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; background: var(--surface); }
+.checkin-lang button { border: 0; background: transparent; padding: 8px 16px; font: inherit; font-weight: 700; cursor: pointer; color: var(--muted); min-height: 40px; }
+.checkin-lang button.active { background: var(--primary); color: #fff; }
+.checkin-steps { list-style: none; display: flex; gap: 10px; padding: 0; margin: 0; flex-wrap: wrap; }
+.checkin-steps li { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-weight: 700; font-size: .88rem; }
+.checkin-steps li span { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--border); color: var(--text); font-size: .8rem; }
+.checkin-steps li.active { background: var(--primary-100); color: var(--primary-600); }
+.checkin-steps li.active span { background: var(--primary); color: #fff; }
+.checkin-steps li.done span { background: var(--success); color: #fff; }
+.checkin-split { align-items: start; }
+.checkin-stage { position: relative; border-radius: var(--radius-sm); overflow: hidden; background: #0d1117; aspect-ratio: 4/3; display: grid; place-items: center; color: #cbd5e1; }
+.checkin-video, .checkin-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); transition: opacity .3s; }
+.checkin-stage-msg { position: relative; z-index: 2; text-align: center; padding: 16px; font-weight: 600; }
+.checkin-oval { position: absolute; z-index: 2; width: 42%; height: 68%; border-radius: 50%; border: 3px dashed #fbbf24; }
+.checkin-oval[data-ok="1"] { border: 3px solid #4ade80; }
+.checkin-countdown { position: absolute; z-index: 3; top: 12px; inset-inline-end: 12px; min-width: 56px; height: 56px; padding: 0 10px; border-radius: 999px; display: grid; place-items: center; background: rgba(15,23,42,.78); color: #fff; font-size: 1.5rem; font-weight: 800; }
+.checkin-stage-foot { position: absolute; z-index: 3; bottom: 14px; left: 12px; right: 12px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.checkin-stage-foot .badge { font-size: .86rem; padding: 6px 12px; }
+.checkin-progress { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; height: 6px; background: rgba(255,255,255,.2); }
+.checkin-progress div { height: 100%; background: var(--gradient-secondary); transition: width .25s linear; }
+.checkin-link { background: none; border: 0; padding: 10px 0 0; color: var(--muted); text-decoration: underline; cursor: pointer; font: inherit; font-size: .8rem; }
+.checkin-vital { padding: 16px; text-align: center; }
+.checkin-vital-label { font-size: .8rem; font-weight: 700; }
+.checkin-vital-value { font-size: 2.1rem; font-weight: 800; line-height: 1.2; font-family: var(--font-display); }
+.checkin-vital-value span { font-size: .8rem; font-weight: 600; color: var(--muted); }
+.checkin-vital-empty { font-size: .84rem; padding: 14px 0 4px; }
+.checkin-live { display: flex; gap: 22px; flex-wrap: wrap; font-size: 1rem; align-items: baseline; margin: 6px 0; }
+.checkin-live b { font-size: 1.7rem; font-family: var(--font-display); }
+.checkin-warn { background: var(--warning-100); border-color: var(--warning); color: var(--warning-strong); }
+.checkin-note { background: var(--primary-100); border-color: var(--primary); color: var(--primary-600); padding: 12px 14px; font-size: .88rem; }
+.checkin-break { background: var(--success-100); border-color: var(--success); color: var(--success-strong); }
+.checkin-tips { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.checkin-tips li { display: flex; gap: 10px; align-items: center; }
+.checkin-select { font: inherit; padding: 6px 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.checkin-cue { margin-top: 10px; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--warning-100); color: var(--warning-strong); font-weight: 700; }
+.checkin-cue.good { background: var(--success-100); color: var(--success-strong); }
+.checkin-baselines { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.checkin-baseline { display: grid; gap: 4px; justify-items: start; }
+.checkin-care { display: flex; gap: 8px; align-items: center; margin: 14px 0 0; font-size: .86rem; color: var(--muted); }
+.checkin-move-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; text-align: center; }
+.checkin-move-summary div { background: var(--surface-2); border-radius: var(--radius-sm); padding: 10px 6px; display: grid; }
+.checkin-move-summary b { font-size: 1.3rem; }
+.checkin-move-summary span { font-size: .74rem; color: var(--muted); }
+.checkin-explain { font-size: 1.06rem; line-height: 1.8; margin: 10px 0 0; }
+.checkin-habit { background: var(--success-100); border-color: var(--success); }
+.checkin-habit-label { font-weight: 800; color: var(--success-strong); font-size: .86rem; }
+.checkin-habit-text { font-size: 1.04rem; line-height: 1.7; margin-top: 4px; color: var(--success-strong); }
+.checkin-alert { margin: 10px 0; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--surface-2); font-size: .88rem; line-height: 1.5; }
+.checkin-alert.concern { background: var(--danger-100); color: var(--danger-strong); }
+.checkin-list { margin: 8px 0 0; padding-inline-start: 20px; display: grid; gap: 8px; line-height: 1.6; font-size: .92rem; color: #0f172a; }
+@media (max-width: 720px) { .checkin-vitals { grid-template-columns: 1fr !important; } }
