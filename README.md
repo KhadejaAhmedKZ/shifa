@@ -1,5 +1,63 @@
 # Shifa' (شفاء) — Multi-Agent Healthcare Companion
 
+> **Shifa' (شفاء) — HealthX Hackathon, theme: Longevity.** Helping people in Abu Dhabi
+> prevent, detect early and manage the health risks of ageing. Shifa' is built on the
+> Sanadi AI platform (described below) and adds the three things in this section.
+
+## 🆕 What Shifa' adds
+
+### 1. Daily Check-in (`/check-in`)
+- **Camera vitals** — a 30-second face scan with the [VitalLens API](https://www.rouast.com/api/)
+  returns heart rate and breathing rate (and HRV when the plan provides it), each with a
+  confidence value. Low confidence → the reading is not saved and the user is asked to retry
+  (better light, stay still). Always labelled **"Wellness estimate, not a medical diagnosis"**.
+  Blood pressure is never shown.
+- **Key stays server-side** — the browser talks to `/checkin/vitallens/*` on the backend, which
+  adds `VITALLENS_API_KEY` from `.env`. If the key is missing or the API fails, the scan falls
+  back to VitalLens' open-source on-device method (heart rate only).
+- **Posture & movement** — MediaPipe Pose, fully in the browser: slouch / forward-head detection
+  against the user's own calibrated upright pose, a sitting-time movement reminder, and two guided
+  moves (chair sit-to-stand, shoulder rolls) with a rep counter and form feedback. Video is never
+  uploaded or stored.
+- **Companion** — explains the result in plain Arabic or English (with read-aloud), flags changes
+  from the person's **own baseline** (e.g. resting heart rate trending up over two weeks), and
+  suggests one habit for the week.
+- **Care circle** — the Primary Carer and doctor dashboards show the trend, and both are alerted
+  (at most once a day) when a reading drifts from baseline.
+- **How it works / limits** — `/check-in/about`.
+
+### 2. Exercise (`/exercise`)
+- **Camera coach** for Squat, Bicep Curl and Lunge: live rep counter, joint angle, spoken form
+  cues, and a session summary with a form-consistency score. Same engine as VIEW POINT FIT,
+  with gentler targets. On-device only.
+- **AI Coach** — a chat that knows the user's exercise sessions and check-in trend, answers in
+  Arabic or English, and stays within movement coaching (no diagnosis, safety-first advice).
+
+### 3-minute demo flow
+1. Log in as `sara@example.com` → **Daily Check-in** → 30-second scan → Continue.
+2. Calibrate posture, do two sit-to-stands → **Finish & see my results**.
+3. Read the explanation (switch to العربية, tap **Read aloud**) and the drift flag on the trend.
+4. Log in as `care@example.com` (or `doctor@example.com`) → the trend card and drift alert.
+5. Back as Sara → **Exercise** → a few squats → **Ask the coach about this session**.
+
+### Run it locally
+```bash
+cp .env.example .env            # add GEMINI_API_KEY and VITALLENS_API_KEY
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/uvicorn backend.main:app --port 8000      # seeds demo data on first start
+
+cd frontend && npm install && npm run dev            # http://localhost:5173
+npm test                                             # unit tests for the check-in + exercise logic
+```
+If port 8000 is taken, run the backend on another port and start the frontend with
+`SHIFA_API=http://localhost:8010 npm run dev`.
+
+> **Limits.** Wellness estimates only — Shifa' is not a medical device and does not diagnose.
+> The demo API has no per-user auth on the check-in endpoints or the VitalLens proxy; do not
+> expose a backend holding a real key to the open internet without adding that.
+
+---
+
 > Your AI-powered healthcare support, always by your side.
 
 Shifa' is a full-stack, **deployed** healthcare platform: a FastAPI + Gemini

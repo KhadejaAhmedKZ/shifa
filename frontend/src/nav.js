@@ -29,6 +29,7 @@ import {
   Truck,
   HeartHandshake,
   ScanFace,
+  Dumbbell,
   Info,
 } from "lucide-react";
 
@@ -39,6 +40,7 @@ export const NAV = {
       items: [
         { to: "/", icon: Home, label: "Home", end: true },
         { to: "/check-in", icon: ScanFace, label: "Daily Check-in", end: true },
+        { to: "/exercise", icon: Dumbbell, label: "Exercise" },
         { to: "/coordinator", icon: Sparkles, label: "Care Coordinator" },
         { to: "/chat", icon: MessageCircleMore, label: "AI Assistant" },
         { to: "/body-map", icon: PersonStanding, label: "Body Map" },

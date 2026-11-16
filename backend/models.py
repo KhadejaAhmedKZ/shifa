@@ -350,3 +350,22 @@ class CheckIn(Base):
     shoulder_roll_reps: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
     drift_alerted: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
+class ExerciseSession(Base):
+    """One camera-coached exercise session (numbers only — no frames stored)."""
+
+    __tablename__ = "exercise_sessions"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    patient_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    exercise: Mapped[str] = mapped_column(String(40))  # squat | curl | lunge
+    reps: Mapped[int] = mapped_column(Integer, default=0)
+    target_reps: Mapped[int] = mapped_column(Integer, default=0)
+    duration_seconds: Mapped[int] = mapped_column(Integer, default=0)
+    form_consistency: Mapped[int] = mapped_column(Integer, default=0)  # 0-100 coaching metric
+    tracking_quality: Mapped[int] = mapped_column(Integer, default=0)  # 0-100
+    partial_reps: Mapped[int] = mapped_column(Integer, default=0)
+    too_fast: Mapped[int] = mapped_column(Integer, default=0)
+    side: Mapped[str | None] = mapped_column(String(10), nullable=True)
+    completed_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

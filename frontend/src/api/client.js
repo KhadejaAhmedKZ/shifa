@@ -179,6 +179,11 @@ export const api = {
   explainCheckin: (id, lang) => request(`/checkin/${id}/explain`, { method: "POST", body: { lang } }),
   checkinDrift: () => request("/checkin/drift"),
 
+  // Exercise (camera pose coach + AI Coach)
+  exerciseSessions: (pid) => request(`/exercise/patients/${pid}/sessions`),
+  saveExerciseSession: (payload) => request("/exercise/sessions", { method: "POST", body: payload }),
+  exerciseCoach: (payload) => request("/exercise/coach", { method: "POST", body: payload }),
+
   // Care modules
   careModules: () => request("/care/modules"),
 

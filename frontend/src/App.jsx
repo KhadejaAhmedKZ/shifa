@@ -21,6 +21,7 @@ import Privacy from "./pages/Privacy.jsx";
 import Learning from "./pages/Learning.jsx";
 import Accessibility from "./pages/Accessibility.jsx";
 import CheckIn from "./pages/CheckIn.jsx";
+import Exercise from "./pages/Exercise.jsx";
 import HowItWorks from "./pages/HowItWorks.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { SkeletonStatGrid, SkeletonList } from "./components/Skeleton.jsx";
@@ -92,6 +93,7 @@ export default function App() {
         <Route path="/body-map" element={<RequireRole role="patient"><BodyMap /></RequireRole>} />
         <Route path="/monitoring" element={<RequireRole role="patient"><Monitoring /></RequireRole>} />
         <Route path="/check-in" element={<RequireRole role="patient"><CheckIn /></RequireRole>} />
+        <Route path="/exercise" element={<RequireRole role="patient"><Exercise /></RequireRole>} />
         <Route path="/check-in/about" element={<HowItWorks />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/learn" element={<Learning />} />

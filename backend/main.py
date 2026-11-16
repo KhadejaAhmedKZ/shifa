@@ -13,6 +13,7 @@ from backend.api import (
     body_routes,
     care_market_routes,
     checkin_routes,
+    exercise_routes,
     coordinator_routes,
     meal_routes,
     monitoring_routes,
@@ -101,6 +102,7 @@ for module in (
     meal_routes,
     monitoring_routes,
     checkin_routes,
+    exercise_routes,
 ):
     app.include_router(module.router)
 
