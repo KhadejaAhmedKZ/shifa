@@ -31,7 +31,7 @@ export default function AccessibilityBar() {
       <button
         className={settings.faceControl ? "on" : ""}
         onClick={() => toggle("faceControl")}
-        title="Hands-free face control (head + blink)"
+        title={settings.faceControl ? "Turn off face control" : "Hands-free face control (head + blink)"}
         aria-pressed={settings.faceControl}
       >
         👁️

@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Camera, RotateCcw, ShieldCheck, Lock, Info, Users, Sun, Hand, Eye } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { api } from "../api/client.js";
-import { useLocalStorage } from "../hooks/useLocalStorage.js";
-import { defaultLang } from "../data/checkinStrings.js";
+import { useLang } from "../context/LanguageContext.jsx";
 import { greyWorldGains, regionLab, pallorReading } from "../lib/pallorMetrics.js";
 import { PallorChart } from "../components/pallor/PallorTrend.jsx";
 import { ErrorNote } from "../components/ui.jsx";
@@ -79,7 +78,7 @@ const S = {
 
 export default function EyelidCheck() {
   const { user } = useAuth();
-  const [lang, setLang] = useLocalStorage("shifa_checkin_lang", defaultLang());
+  const [lang, setLang] = useLang();
   const T = S[lang] || S.en;
   const t = (k, v) => { let s = T[k] ?? S.en[k] ?? k; if (v) for (const [a, b] of Object.entries(v)) s = s.replace(`{${a}}`, b); return s; };
 

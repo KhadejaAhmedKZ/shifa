@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { ShieldCheck, Volume2, Square, Sparkles, Info, Users, RotateCcw } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { api } from "../api/client.js";
-import { useLocalStorage } from "../hooks/useLocalStorage.js";
-import { strings, defaultLang } from "../data/checkinStrings.js";
+import { useLang } from "../context/LanguageContext.jsx";
+import { strings } from "../data/checkinStrings.js";
 import { toCheckinPayload } from "../lib/vitalsSummary.js";
 import VitalsScan, { VitalTile } from "../components/checkin/VitalsScan.jsx";
 import MovementCheck from "../components/checkin/MovementCheck.jsx";
@@ -13,7 +13,7 @@ import { ErrorNote } from "../components/ui.jsx";
 
 export default function CheckIn() {
   const { user } = useAuth();
-  const [lang, setLang] = useLocalStorage("shifa_checkin_lang", defaultLang());
+  const [lang, setLang] = useLang();
   const t = strings(lang);
   const [step, setStep] = useState(1);
   const [vitals, setVitals] = useState(null);     // scan summary or null (skipped)

@@ -79,3 +79,6 @@ body.a11y-high-contrast .fc-cursor-ring { border-color: #22d3ee; box-shadow: 0 0
   border-radius: 999px; padding: 6px 8px; box-shadow: var(--shadow-lg);
 }
 
+
+.fc-close { border: 0; background: var(--surface-2); color: var(--text); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: .9rem; line-height: 1; display: grid; place-items: center; }
+.fc-close:hover { background: var(--danger-100); color: var(--danger-strong); }

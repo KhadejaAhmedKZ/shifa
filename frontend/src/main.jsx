@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import { AccessibilityProvider } from "./context/AccessibilityContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { ToastProvider } from "./context/ToastContext.jsx";
+import { LanguageProvider } from "./context/LanguageContext.jsx";
 import "./styles/theme.css";
 import "./styles/layout.css";
 import "./styles/components.css";
@@ -21,12 +22,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <HashRouter>
         <AuthProvider>
           <AccessibilityProvider>
+            <LanguageProvider>
             <ToastProvider>
               <OfflineNotice />
               <App />
               <FaceControl />
               <SpeechAnnouncer />
             </ToastProvider>
+            </LanguageProvider>
           </AccessibilityProvider>
         </AuthProvider>
       </HashRouter>

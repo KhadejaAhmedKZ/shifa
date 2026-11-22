@@ -52,7 +52,7 @@ export default function FaceControl() {
       {/* Always mount the video so the stream has a sink; preview is toggleable. */}
       <video
         ref={videoRef}
-        className={"fc-video" + (showPreview ? "" : " hidden")}
+        className={"fc-video" + (showPreview && status !== "error" ? "" : " hidden")}
         playsInline
         muted
       />
@@ -67,10 +67,13 @@ export default function FaceControl() {
       <div className="fc-panel" role="dialog" aria-label="Face control">
         <div className="fc-panel-head">
           <strong>👁️ Face Control</strong>
-          <span className={"fc-status " + status}>
-            {status === "loading" && "Starting…"}
-            {status === "active" && (face ? "● Tracking" : "○ No face")}
-            {status === "error" && "Error"}
+          <span className="row" style={{ gap: 6 }}>
+            <span className={"fc-status " + status}>
+              {status === "loading" && "Starting…"}
+              {status === "active" && (face ? "● Tracking" : "○ No face")}
+              {status === "error" && "Error"}
+            </span>
+            <button className="fc-close" onClick={() => toggle("faceControl")} aria-label="Turn off face control" title="Turn off face control">✕</button>
           </span>
         </div>
 
@@ -80,6 +83,9 @@ export default function FaceControl() {
             <div className="muted" style={{ fontSize: ".8rem", marginTop: 6 }}>
               Allow camera access in your browser, then re-activate.
             </div>
+            <button className="btn danger sm" style={{ marginTop: 10, width: "100%" }} onClick={() => toggle("faceControl")}>
+              Turn off Face Control
+            </button>
           </div>
         ) : (
           <>

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ScanFace, Armchair, Sparkles, Lock, AlertTriangle, Users, ArrowLeft } from "lucide-react";
-import { useLocalStorage } from "../hooks/useLocalStorage.js";
-import { defaultLang } from "../data/checkinStrings.js";
+import { useLang } from "../context/LanguageContext.jsx";
 
 const COPY = {
   en: {
@@ -61,7 +60,7 @@ const COPY = {
 };
 
 export default function HowItWorks() {
-  const [lang, setLang] = useLocalStorage("shifa_checkin_lang", defaultLang());
+  const [lang, setLang] = useLang();
   const c = COPY[lang] || COPY.en;
   return (
     <div className="grid checkin" style={{ gap: 20 }} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>

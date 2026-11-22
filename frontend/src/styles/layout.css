@@ -118,3 +118,6 @@
   .topbar-search { display: none; }
 }
 .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 400; }
+.a11y-bar button.on { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--primary); }
+button.lang-select { cursor: pointer; font: inherit; font-size: .8rem; font-weight: 700; color: var(--text); }
+button.lang-select:hover { border-color: var(--primary); color: var(--primary); }

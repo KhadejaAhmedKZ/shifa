@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ShieldCheck, Send, Sparkles, Volume2, Target, RotateCcw } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { api } from "../api/client.js";
-import { useLocalStorage } from "../hooks/useLocalStorage.js";
-import { defaultLang } from "../data/checkinStrings.js";
+import { useLang } from "../context/LanguageContext.jsx";
 import { exerciseStrings } from "../data/exerciseStrings.js";
 import { EXERCISE_LIST } from "../lib/exerciseEngine.js";
 import PoseCoach from "../components/exercise/PoseCoach.jsx";
@@ -14,7 +13,7 @@ const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 
 export default function Exercise() {
   const { user } = useAuth();
-  const [lang, setLang] = useLocalStorage("shifa_checkin_lang", defaultLang());
+  const [lang, setLang] = useLang();
   const t = exerciseStrings(lang);
   const [selected, setSelected] = useState("squat");
   const [runKey, setRunKey] = useState(0);
