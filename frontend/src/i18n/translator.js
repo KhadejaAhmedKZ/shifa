@@ -31,6 +31,8 @@ function lookup(original) {
   if (!dict) return null;
   const trimmed = original.replace(/\s+/g, " ").trim();
   if (!trimmed || !/[A-Za-z]/.test(trimmed)) return null;
+  // Initials and short codes ("SA", "DL", "GPU") are never words to translate.
+  if (/^[A-Z]{1,4}$/.test(trimmed)) return null;
   const nums = [];
   let i = 0;
   const key = trimmed.replace(NUM, (m) => { nums.push(m); return `{${i++}}`; });

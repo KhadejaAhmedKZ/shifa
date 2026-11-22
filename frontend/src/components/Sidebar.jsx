@@ -69,7 +69,7 @@ export default function Sidebar({ open, onNavigate, collapsed, onToggleCollapse 
       </nav>
 
       <button className="sidebar-profile" onClick={() => navigate("/accessibility")} title="Account settings">
-        <div className="avatar sm">{initials}</div>
+        <div className="avatar sm" translate="no">{initials}</div>
         {!collapsed && (
           <div style={{ textAlign: "left", overflow: "hidden" }}>
             <div style={{ fontWeight: 700, fontSize: ".85rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>

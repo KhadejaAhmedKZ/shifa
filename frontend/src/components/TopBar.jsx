@@ -161,7 +161,7 @@ export default function TopBar({ onMenu }) {
 
         <div style={{ position: "relative" }} ref={profileRef}>
           <button className="user-chip" onClick={() => setProfileOpen((o) => !o)}>
-            <div className="avatar">{initials}</div>
+            <div className="avatar" translate="no">{initials}</div>
             <div style={{ lineHeight: 1.1, textAlign: "left" }}>
               <div style={{ fontWeight: 700, fontSize: ".9rem" }}>{user?.name}</div>
               <div className="muted" style={{ fontSize: ".75rem", textTransform: "capitalize" }}>{user?.role}</div>
