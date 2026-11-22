@@ -8,7 +8,7 @@ from pathlib import Path
 
 from backend.database import SessionLocal, init_db
 from backend.models import (
-    Appointment, BodyAssessment, BookingStatus, CheckIn, DeliveryStatus, ExternalBooking,
+    Appointment, BodyAssessment, BookingStatus, CheckIn, PallorReading, DeliveryStatus, ExternalBooking,
     LabResult, Meal, MedicationDelivery, MedicationLog, RehabSession, SymptomLog, User, UserRole,
 )
 from backend.services import medication_service, patient_service
@@ -229,6 +229,26 @@ def _seed_checkins(db, patient: User) -> None:
     db.commit()
 
 
+def _seed_pallor(db, patient: User) -> None:
+    """Eyelid colour history for Ahmed only: gradually paler over two months, so
+    the doctor view shows the alert. Sara is left empty on purpose: the score is
+    camera-relative, so her baseline must come from her own real readings —
+    seeded numbers could trigger a false "paler" flag during a live demo."""
+    series = {
+        "ahmed@example.com": [(60, 16.5), (50, 16.9), (40, 15.8), (30, 13.1), (20, 11.2), (10, 10.4)],
+    }.get(patient.email)
+    if not series or db.query(PallorReading).filter(PallorReading.patient_id == patient.id).count():
+        return
+    now = datetime.utcnow().replace(hour=8, minute=40, second=0, microsecond=0)
+    for days_ago, rel in series:
+        db.add(PallorReading(
+            patient_id=patient.id, created_at=now - timedelta(days=days_ago),
+            eyelid_index=round(rel + 14.0, 1), skin_index=14.0, relative_index=rel,
+            quality=0.85, source="demo",
+        ))
+    db.commit()
+
+
 def _seed_history(db, patient: User) -> None:
     spec = HISTORY.get(patient.email)
     if not spec:
@@ -317,6 +337,7 @@ def seed() -> None:
             _seed_meals(db, patient)
             _seed_market(db, patient)
             _seed_checkins(db, patient)
+            _seed_pallor(db, patient)
             print(f"✓ Seeded patient {patient.name} (id={patient.id})")
 
         _seed_staff(db)

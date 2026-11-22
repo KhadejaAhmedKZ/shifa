@@ -11,6 +11,7 @@ import MiniCalendar from "../components/MiniCalendar.jsx";
 import Markdown from "../components/Markdown.jsx";
 import { ReminderList } from "../components/CareTools.jsx";
 import CheckinTrendCard from "../components/checkin/CheckinTrend.jsx";
+import PallorTrendCard from "../components/pallor/PallorTrend.jsx";
 
 const SCOPES = ["medications", "appointments", "symptoms", "safety"];
 const POLL_MS = 20000; // live alert polling
@@ -275,6 +276,7 @@ export default function CaregiverDashboard() {
           {section === "overview" && (
             <motion.div className="grid" style={{ gap: 20 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <CheckinTrendCard patientId={patientId} patientName={overview.patient.name} />
+              <PallorTrendCard patientId={patientId} patientName={overview.patient.name} />
               <div className="grid cols-3">
                 {"adherence_rate" in overview && (
                   <StatCard icon="✅" value={`${Math.round(overview.adherence_rate * 100)}%`} label="Adherence" accent="#14b8a6" />

@@ -33,6 +33,21 @@
 - **AI Coach** — a chat that knows the user's exercise sessions and check-in trend, answers in
   Arabic or English, and stays within movement coaching (no diagnosis, safety-first advice).
 
+### 3. Eyelid Colour Check (`/eyelid-check`) — anemia prompt
+- A weekly 1-minute photo: the person pulls down their lower eyelid, takes a photo, taps the
+  pink inner rim, then taps their cheek. Colour is measured **on the device** (grey-world white
+  balance, then CIELAB redness of the eyelid minus the person's own cheek skin) and the photo is
+  never uploaded or stored.
+- Compared only with the person's **own** usual colour (3 readings to learn it). A paler trend
+  prompts "ask your doctor about a simple blood test (CBC)" and alerts the carer and doctor (at
+  most weekly). Never shown as anemia or a haemoglobin number.
+- Approach adapted from the MIT-licensed
+  [TatianaUshakova/Anemia_detection](https://github.com/TatianaUshakova/Anemia_detection)
+  (colour-corrected mean colour of the masked body part); the person's own skin replaces the
+  printed colour card. The thresholds are heuristic and not clinically validated.
+
+The three longevity checks are the first section on the patient dashboard.
+
 ### 3-minute demo flow
 1. Log in as `sara@example.com` → **Daily Check-in** → 30-second scan → Continue.
 2. Calibrate posture, do two sit-to-stands → **Finish & see my results**.

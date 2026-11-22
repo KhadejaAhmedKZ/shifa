@@ -9,6 +9,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage.js";
 import { useVoice } from "../hooks/useVoice.js";
 import { api } from "../api/client.js";
 import CheckinTrendCard from "../components/checkin/CheckinTrend.jsx";
+import PallorTrendCard from "../components/pallor/PallorTrend.jsx";
 import Markdown from "../components/Markdown.jsx";
 import VideoVisit from "../components/VideoVisit.jsx";
 import BodyFigure, { intensityColor } from "../components/BodyFigure.jsx";
@@ -423,7 +424,7 @@ export default function DoctorDashboard() {
                 key={d.patient_id}
                 className={"checkin-alert" + (d.has_concern ? " concern" : "")}
                 style={{ display: "block", width: "100%", textAlign: "start", border: 0, cursor: "pointer", font: "inherit", fontSize: ".8rem", margin: "6px 0 0" }}
-                onClick={() => { const p = patients.find((x) => x.id === d.patient_id); if (p) setSelectedPatient(p); }}
+                onClick={() => { const p = patients.find((x) => x.id === d.patient_id); if (p) selectPatient(p); }}
               >
                 <strong>{d.patient_name}</strong> — {d.alerts[0].message_en}
               </button>
@@ -495,6 +496,7 @@ export default function DoctorDashboard() {
               </div>
 
               <CheckinTrendCard patientId={selectedPatient.id} patientName={selectedPatient.name} />
+              <PallorTrendCard patientId={selectedPatient.id} patientName={selectedPatient.name} />
 
               <div className="tabs">
                 <button className={"tab" + (detailTab === "summary" ? " active" : "")} onClick={() => setDetailTab("summary")}>🧠 AI Summary</button>

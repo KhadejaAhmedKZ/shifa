@@ -210,18 +210,21 @@ def drifting_patients(db: Session) -> list[dict]:
     out = []
     patients = db.scalars(select(User).where(User.role == UserRole.patient)).all()
     for p in patients:
+        from backend.services import pallor_service  # local import avoids a cycle
+
         rows = list_checkins(db, p.id)
-        if not rows:
-            continue
-        analysis = analyse(rows)
-        if analysis["alerts"]:
+        alerts = analyse(rows)["alerts"] if rows else []
+        pallor = pallor_service.analyse(pallor_service.list_readings(db, p.id))
+        if pallor["alert"]:
+            alerts = alerts + [pallor["alert"]]
+        if alerts:
             out.append(
                 {
                     "patient_id": p.id,
                     "patient_name": p.name,
-                    "last_checkin": rows[-1].created_at.isoformat(),
-                    "has_concern": analysis["has_concern"],
-                    "alerts": analysis["alerts"],
+                    "last_checkin": rows[-1].created_at.isoformat() if rows else None,
+                    "has_concern": any(a["concerning"] for a in alerts),
+                    "alerts": alerts,
                 }
             )
     return out

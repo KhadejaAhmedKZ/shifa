@@ -9,9 +9,14 @@ import AnimatedCounter from "../components/AnimatedCounter.jsx";
 import { SkeletonStatGrid, SkeletonCard } from "../components/Skeleton.jsx";
 import { extractVital, computeHealthScore } from "../utils/wellness.js";
 
+// Shifa's main longevity features — shown first on the dashboard.
+const LONGEVITY = [
+  { to: "/check-in", icon: "🩺", title: "Daily Check-in", sub: "30-sec camera scan of heart & breathing rate, plus a posture check.", tag: "DAILY", bg: "linear-gradient(135deg,#2563eb,#06b6d4)" },
+  { to: "/eyelid-check", icon: "👁️", title: "Eyelid Colour Check", sub: "Weekly 1-minute photo — an early prompt to ask about anemia.", tag: "NEW · WEEKLY", bg: "linear-gradient(135deg,#e11d48,#f97316)" },
+  { to: "/exercise", icon: "🏃", title: "Exercise", sub: "Camera coach for squats, curls & lunges, plus your AI Coach.", tag: "STRENGTH", bg: "linear-gradient(135deg,#14b8a6,#22c55e)" },
+];
+
 const QUICK = [
-  { to: "/check-in", icon: "🩺", title: "Daily Check-in", sub: "30-sec camera wellness scan" },
-  { to: "/exercise", icon: "🏃", title: "Exercise", sub: "Camera coach + AI Coach" },
   { to: "/chat", icon: "💬", title: "Ask the AI", sub: "Clinical, appointments & more" },
   { to: "/appointments", icon: "📅", title: "Appointments", sub: "Book or manage visits" },
   { to: "/medications", icon: "💊", title: "Medications", sub: "Schedule & adherence" },
@@ -143,6 +148,25 @@ export default function Home() {
           </Link>
         </div>
       </motion.div>
+
+      <div>
+        <h2 style={{ marginBottom: 4 }}>Your longevity checks</h2>
+        <p className="muted" style={{ margin: "0 0 14px", fontSize: ".88rem" }}>
+          Small camera checks that compare you with your own usual — and alert your care team early.
+        </p>
+        <div className="longevity-grid">
+          {LONGEVITY.map((f, i) => (
+            <motion.div key={f.to} {...fadeUp(0.04 + i * 0.05)}>
+              <Link to={f.to} className="longevity-card" style={{ background: f.bg }}>
+                <span className="lc-tag">{f.tag}</span>
+                <span className="lc-icon">{f.icon}</span>
+                <span className="lc-title">{f.title}</span>
+                <span className="lc-sub">{f.sub}</span>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
       {loading ? (
         <div className="grid cols-4"><SkeletonCard /><SkeletonCard /><SkeletonCard /></div>
