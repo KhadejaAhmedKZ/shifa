@@ -1,3 +1,4 @@
+import { speechLang } from "../../i18n/translator.js";
 import { useEffect, useRef, useState } from "react";
 import { PoseLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 import { Armchair, PersonStanding, RefreshCw, Timer, Video, Lock, BellRing } from "lucide-react";
@@ -43,7 +44,7 @@ export default function MovementCheck({ t, lang, onDone, onSkip }) {
     if (!text || text === L.lastSpoken || !window.speechSynthesis) return;
     L.lastSpoken = text;
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = lang === "ar" ? "ar-SA" : "en-US";
+    u.lang = speechLang(lang);
     u.rate = 0.95;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(u);

@@ -1,3 +1,4 @@
+import { speechLang } from "../i18n/translator.js";
 import { useEffect, useRef, useState } from "react";
 
 // Speech-to-text hook using the browser Web Speech API (SpeechRecognition).
@@ -15,7 +16,7 @@ export function useVoice({ onResult } = {}) {
     const recognition = new SR();
     recognition.continuous = false;
     recognition.interimResults = true;
-    recognition.lang = "en-US";
+    recognition.lang = speechLang(document.documentElement.lang || "en");
 
     recognition.onresult = (event) => {
       let text = "";
@@ -37,6 +38,7 @@ export function useVoice({ onResult } = {}) {
 
   const start = () => {
     if (!recognitionRef.current || listening) return;
+    recognitionRef.current.lang = speechLang(document.documentElement.lang || "en");
     setTranscript("");
     setListening(true);
     try {

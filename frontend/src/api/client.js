@@ -4,6 +4,9 @@
 const BASE = import.meta.env.VITE_API_URL || "/api";
 export const API_BASE = BASE;
 
+// Current UI language — the backend uses it to answer AI questions in that language.
+const uiLang = () => (typeof document !== "undefined" && document.documentElement.lang) || "en";
+
 const NETWORK_ERROR_MSG =
   "Can't reach the server — it may be waking up (free hosting sleeps when idle). " +
   "Please wait ~30 seconds and try again.";
@@ -31,7 +34,7 @@ function errorFrom(res, data) {
 }
 
 async function request(path, { method = "GET", body, token } = {}) {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { "Content-Type": "application/json", "X-Lang": uiLang() };
   if (token) headers.Authorization = `Bearer ${token}`;
 
   let res;
@@ -89,7 +92,7 @@ export const api = {
     form.append("image", file);
     let res;
     try {
-      res = await fetch(`${BASE}/chat/image`, { method: "POST", body: form });
+      res = await fetch(`${BASE}/chat/image`, { method: "POST", body: form, headers: { "X-Lang": uiLang() } });
     } catch {
       throw new Error(NETWORK_ERROR_MSG);
     }
@@ -160,7 +163,7 @@ export const api = {
     form.append("note", note || "");
     form.append("image", file);
     let res;
-    try { res = await fetch(`${BASE}/meals/image`, { method: "POST", body: form }); }
+    try { res = await fetch(`${BASE}/meals/image`, { method: "POST", body: form, headers: { "X-Lang": uiLang() } }); }
     catch { throw new Error(NETWORK_ERROR_MSG); }
     const data = await parseBody(res);
     if (!res.ok) throw errorFrom(res, data);

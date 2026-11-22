@@ -1,17 +1,31 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage.js";
-import { defaultLang } from "../data/checkinStrings.js";
+import { applyLanguage } from "../i18n/translator.js";
 
-// One shared app language ("en" | "ar"). The top-bar switch and the in-page
-// English/العربية buttons all read and write this, so they stay in sync.
+export const LANGUAGES = [
+  { code: "en", label: "English", short: "EN" },
+  { code: "ar", label: "العربية", short: "ع" },
+  { code: "ur", label: "اردو", short: "اردو" },
+];
+
+const initial = () => {
+  const n = (typeof navigator !== "undefined" && navigator.language || "").toLowerCase();
+  return n.startsWith("ar") ? "ar" : n.startsWith("ur") ? "ur" : "en";
+};
+
+// One shared app language for the WHOLE site. The top-bar menu and the in-page
+// language buttons all read and write this, and the site-wide translator
+// (i18n/translator.js) re-renders every page in that language.
 const LanguageContext = createContext({ lang: "en", setLang: () => {} });
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useLocalStorage("shifa_checkin_lang", defaultLang());
-  return <LanguageContext.Provider value={{ lang, setLang }}>{children}</LanguageContext.Provider>;
+  const [lang, setLang] = useLocalStorage("shifa_checkin_lang", initial());
+  const safe = LANGUAGES.some((l) => l.code === lang) ? lang : "en";
+  useEffect(() => { applyLanguage(safe); }, [safe]);
+  return <LanguageContext.Provider value={{ lang: safe, setLang }}>{children}</LanguageContext.Provider>;
 }
 
-/** Drop-in replacement for the per-page useLocalStorage language state: returns [lang, setLang]. */
+/** Returns [lang, setLang]. */
 export const useLang = () => {
   const { lang, setLang } = useContext(LanguageContext);
   return [lang, setLang];

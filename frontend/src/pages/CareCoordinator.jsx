@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -69,7 +70,7 @@ export default function CareCoordinator() {
       );
       const when = new Date(res.appointment.scheduled_for);
       const stamp =
-        when.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }) +
+        when.toLocaleDateString(appLocale(), { weekday: "short", month: "short", day: "numeric" }) +
         " at " +
         when.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
       setSteps((prev) =>

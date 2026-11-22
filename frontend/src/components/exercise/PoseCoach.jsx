@@ -1,3 +1,4 @@
+import { speechLang } from "../../i18n/translator.js";
 import { useEffect, useRef, useState } from "react";
 import { PoseLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 import { Video, Square, Lock } from "lucide-react";
@@ -27,7 +28,7 @@ export default function PoseCoach({ exerciseId, t, lang, onFinish }) {
     if (!text || !window.speechSynthesis || text === L.lastSpoken) return;
     L.lastSpoken = text;
     const u = new SpeechSynthesisUtterance(text.replace("✓", ""));
-    u.lang = lang === "ar" ? "ar-SA" : "en-US";
+    u.lang = speechLang(lang);
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(u);
   };

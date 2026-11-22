@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 // Compact month calendar — highlights real appointment dates.
 export default function MiniCalendar({ highlightDates = [] }) {
   const now = new Date();
@@ -13,7 +14,7 @@ export default function MiniCalendar({ highlightDates = [] }) {
 
   return (
     <div className="mini-calendar">
-      <div className="mini-cal-head">{now.toLocaleDateString(undefined, { month: "long", year: "numeric" })}</div>
+      <div className="mini-cal-head">{now.toLocaleDateString(appLocale(), { month: "long", year: "numeric" })}</div>
       <div className="mini-cal-grid">
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
           <div key={i} className="mini-cal-dow">{d}</div>

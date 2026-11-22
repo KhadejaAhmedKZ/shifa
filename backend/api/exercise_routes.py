@@ -14,6 +14,7 @@ from backend.ai.gemini_client import gemini
 from backend.database import get_db
 from backend.models import ExerciseSession
 from backend.services import checkin_service, patient_service
+from backend.utils import language
 
 router = APIRouter(prefix="/exercise", tags=["exercise"])
 
@@ -156,7 +157,8 @@ async def coach(payload: CoachRequest, db: Session = Depends(get_db)):
     patient = patient_service.get_patient(db, payload.patient_id)
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
-    ar = payload.lang.lower().startswith("ar")
+    lang = language.normalise(payload.lang)
+    ar = lang == "ar"
     sessions = _recent(db, payload.patient_id, limit=8)
     fallback = {"reply": _offline_reply(payload.message, sessions, ar), "source": "offline"}
     if not gemini.online:
@@ -173,7 +175,7 @@ async def coach(payload: CoachRequest, db: Session = Depends(get_db)):
     }
     convo = "\n".join(f"{'Person' if t.role == 'user' else 'Coach'}: {t.text}" for t in payload.history[-8:])
     prompt = (
-        f"Reply in {'simple, warm Modern Standard Arabic' if ar else 'plain English'}.\n"
+        f"Reply in {language.NAMES.get(lang, 'plain English')}.\n"
         f"What you know about this person:\n{context}\n\n"
         f"Conversation so far:\n{convo or '(none)'}\n\nPerson: {payload.message}\nCoach:"
     )

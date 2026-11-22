@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { api } from "../api/client.js";
@@ -26,7 +27,7 @@ export default function PatientDashboard() {
 
   if (error) return <ErrorNote message={error} />;
 
-  const fmt = (iso) => new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+  const fmt = (iso) => new Date(iso).toLocaleString(appLocale(), { dateStyle: "medium", timeStyle: "short" });
 
   if (loading || !dash) {
     return (

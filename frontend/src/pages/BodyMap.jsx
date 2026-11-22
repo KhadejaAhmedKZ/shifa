@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -128,7 +129,7 @@ export default function BodyMap() {
                 <span>
                   <span style={{ fontWeight: 700, fontSize: ".84rem", display: "block" }}>{h.region}</span>
                   <span className="muted" style={{ fontSize: ".74rem" }}>
-                    {h.intensity}/10 · {new Date(h.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                    {h.intensity}/10 · {new Date(h.created_at).toLocaleDateString(appLocale(), { month: "short", day: "numeric" })}
                   </span>
                 </span>
               </button>
@@ -223,7 +224,7 @@ export default function BodyMap() {
                     <div key={h.id} className="row" style={{ gap: 8, padding: "3px 0", fontSize: ".8rem" }}>
                       <span style={{ width: 9, height: 9, borderRadius: 99, background: intensityColor(h.intensity) }} />
                       <span className="muted">
-                        {new Date(h.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })} · {h.intensity}/10
+                        {new Date(h.created_at).toLocaleDateString(appLocale(), { month: "short", day: "numeric" })} · {h.intensity}/10
                         {h.notes ? ` — ${h.notes.slice(0, 40)}` : ""}
                       </span>
                     </div>

@@ -3,6 +3,8 @@ import { ShieldCheck, Send, Sparkles, Volume2, Target, RotateCcw } from "lucide-
 import { useAuth } from "../context/AuthContext.jsx";
 import { api } from "../api/client.js";
 import { useLang } from "../context/LanguageContext.jsx";
+import LangSwitch from "../components/LangSwitch.jsx";
+import { speechLang } from "../i18n/translator.js";
 import { exerciseStrings } from "../data/exerciseStrings.js";
 import { EXERCISE_LIST } from "../lib/exerciseEngine.js";
 import PoseCoach from "../components/exercise/PoseCoach.jsx";
@@ -58,7 +60,7 @@ export default function Exercise() {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = lang === "ar" ? "ar-SA" : "en-US";
+    u.lang = speechLang(lang);
     u.rate = 0.95;
     window.speechSynthesis.speak(u);
   }
@@ -67,16 +69,13 @@ export default function Exercise() {
   const pick = (id) => { setSelected(id); setSummary(null); setRunKey((k) => k + 1); };
 
   return (
-    <div className="grid checkin" style={{ gap: 20 }} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>
+    <div className="grid checkin" style={{ gap: 20 }} dir={lang === "en" ? "ltr" : "rtl"} lang={lang}>
       <div className="page-head row between" style={{ flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
         <div>
           <h1>🏃 {t("title")}</h1>
           <p>{t("subtitle")}</p>
         </div>
-        <div className="checkin-lang" role="group" aria-label="Language">
-          <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>English</button>
-          <button className={lang === "ar" ? "active" : ""} onClick={() => setLang("ar")}>العربية</button>
-        </div>
+          <LangSwitch />
       </div>
 
       <div className="checkin-banner"><ShieldCheck size={17} /> {t("disclaimer")}</div>
@@ -138,7 +137,7 @@ export default function Exercise() {
                   <div>
                     <div style={{ fontWeight: 700 }}>{t(s.exercise)}</div>
                     <div className="muted" style={{ fontSize: ".78rem" }}>
-                      {new Date(s.completed_at + "Z").toLocaleString(lang === "ar" ? "ar-AE" : undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
+                      {new Date(s.completed_at + "Z").toLocaleString(({ ar: "ar-AE", ur: "ur-PK" })[lang], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
                     </div>
                   </div>
                   <div style={{ fontWeight: 700 }}>{s.reps}/{s.target_reps} <span className="muted" style={{ fontWeight: 400 }}>{t("reps")}</span></div>

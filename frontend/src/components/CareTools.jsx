@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage.js";
 
@@ -173,7 +174,7 @@ export function GrowthChart({ storageKey }) {
         <div className="mt">
           {entries.slice().reverse().map((e, i) => (
             <div className="list-row" key={i}>
-              <span className="muted" style={{ fontSize: ".85rem" }}>{new Date(e.date).toLocaleDateString()}</span>
+              <span className="muted" style={{ fontSize: ".85rem" }}>{new Date(e.date).toLocaleDateString(appLocale())}</span>
               <span style={{ fontWeight: 600 }}>
                 {e.height ? `${e.height} cm` : ""}{e.height && e.weight ? " · " : ""}{e.weight ? `${e.weight} kg` : ""}
               </span>

@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -51,7 +52,7 @@ const ROLE_CHAT = {
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 
 function timestamp() {
-  return new Date().toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  return new Date().toLocaleTimeString(appLocale(), { hour: "2-digit", minute: "2-digit" });
 }
 
 function CopyButton({ text }) {

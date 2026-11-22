@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -211,7 +212,7 @@ export default function DoctorDashboard() {
                   <div className="muted" style={{ fontSize: ".8rem" }}>{a.department}{a.reason ? ` — ${a.reason}` : ""}</div>
                 </div>
               </div>
-              <span className="badge">{new Date(a.scheduled_for).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}</span>
+              <span className="badge">{new Date(a.scheduled_for).toLocaleString(appLocale(), { dateStyle: "medium", timeStyle: "short" })}</span>
             </div>
           ))}
         </div>
@@ -706,7 +707,7 @@ export default function DoctorDashboard() {
                           </div>
                         </div>
                         <span className="badge gray">
-                          {new Date(h.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                          {new Date(h.created_at).toLocaleDateString(appLocale(), { month: "short", day: "numeric" })}
                         </span>
                       </div>
                     ))}
@@ -755,7 +756,7 @@ export default function DoctorDashboard() {
                       <div className="list-row" key={a.id}>
                         <div className="lead"><div className="dot">{a.is_video ? "📹" : "🏥"}</div><div>{a.department} {a.reason ? `— ${a.reason}` : ""}</div></div>
                         <div className="row">
-                          <span className="badge">{new Date(a.scheduled_for).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}</span>
+                          <span className="badge">{new Date(a.scheduled_for).toLocaleString(appLocale(), { dateStyle: "medium", timeStyle: "short" })}</span>
                           {a.is_video && (
                             <button className="btn sm" onClick={() => setActiveVisit(a)}>📹 Join</button>
                           )}
@@ -780,7 +781,7 @@ export default function DoctorDashboard() {
                           <div>
                             <div style={{ fontWeight: 700, fontSize: ".9rem" }}>{b.service_type} · {b.provider}</div>
                             <div className="muted" style={{ fontSize: ".78rem" }}>
-                              {new Date(b.scheduled_for).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })} · {b.location}
+                              {new Date(b.scheduled_for).toLocaleString(appLocale(), { dateStyle: "medium", timeStyle: "short" })} · {b.location}
                             </div>
                           </div>
                         </div>

@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -155,7 +156,7 @@ export default function Meals() {
                 {m.kind === "photo" ? "📷 " : "🍴 "}{m.description}
               </div>
               <span className="muted" style={{ fontSize: ".76rem" }}>
-                {new Date(m.created_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
+                {new Date(m.created_at).toLocaleString(appLocale(), { dateStyle: "medium", timeStyle: "short" })}
               </span>
             </div>
             <div className={"meal-note" + (m.flagged ? " flagged" : "")}>

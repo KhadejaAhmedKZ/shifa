@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { ScanFace, Armchair, Sparkles, Lock, AlertTriangle, Users, ArrowLeft } from "lucide-react";
 import { useLang } from "../context/LanguageContext.jsx";
+import LangSwitch from "../components/LangSwitch.jsx";
+import { speechLang } from "../i18n/translator.js";
 
 const COPY = {
   en: {
@@ -63,16 +65,13 @@ export default function HowItWorks() {
   const [lang, setLang] = useLang();
   const c = COPY[lang] || COPY.en;
   return (
-    <div className="grid checkin" style={{ gap: 20 }} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>
+    <div className="grid checkin" style={{ gap: 20 }} dir={lang === "en" ? "ltr" : "rtl"} lang={lang}>
       <div className="page-head row between" style={{ flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
         <div>
           <h1>ℹ️ {c.title}</h1>
           <p>{c.sub}</p>
         </div>
-        <div className="checkin-lang" role="group" aria-label="Language">
-          <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>English</button>
-          <button className={lang === "ar" ? "active" : ""} onClick={() => setLang("ar")}>العربية</button>
-        </div>
+          <LangSwitch />
       </div>
 
       <div className="grid cols-2">

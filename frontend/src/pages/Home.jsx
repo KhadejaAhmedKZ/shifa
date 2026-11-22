@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -104,7 +105,7 @@ export default function Home() {
   if (user?.role === "provider") return <Navigate to="/provider" replace />;
 
   const firstName = user?.name?.split(" ")[0] || "there";
-  const today = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  const today = new Date().toLocaleDateString(appLocale(), { weekday: "long", month: "long", day: "numeric" });
 
   const painLevels = (dash?.recent_symptoms ?? [])
     .filter((s) => s.pain_level != null)
@@ -182,7 +183,7 @@ export default function Home() {
                 <div className="card-sub" style={{ margin: 0 }}>Upcoming appointment</div>
                 {dash?.appointments?.[0] ? (
                   <div style={{ fontWeight: 700 }}>
-                    {dash.appointments[0].department} — {new Date(dash.appointments[0].scheduled_for).toLocaleDateString(undefined, { dateStyle: "medium" })}
+                    {dash.appointments[0].department} — {new Date(dash.appointments[0].scheduled_for).toLocaleDateString(appLocale(), { dateStyle: "medium" })}
                   </div>
                 ) : (
                   <div className="muted">Nothing scheduled</div>
@@ -288,7 +289,7 @@ export default function Home() {
             {dash?.appointments?.[0] ? (
               <li>
                 📅 Next visit: {dash.appointments[0].department} —{" "}
-                {new Date(dash.appointments[0].scheduled_for).toLocaleDateString(undefined, { dateStyle: "medium" })}
+                {new Date(dash.appointments[0].scheduled_for).toLocaleDateString(appLocale(), { dateStyle: "medium" })}
               </li>
             ) : (
               <li>📅 No upcoming appointments</li>

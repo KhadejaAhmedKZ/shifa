@@ -56,7 +56,7 @@ export default function Login() {
             <div className="logo-box"><HeartPulse size={28} strokeWidth={2.3} aria-hidden="true" /></div>
             <div>
               <div className="name">Shifa'</div>
-              <div className="tag">شفاء — healing</div>
+              <div className="tag">Your healthy-ageing companion</div>
             </div>
           </div>
           <h1>One care team.<br />Every role. Always on.</h1>

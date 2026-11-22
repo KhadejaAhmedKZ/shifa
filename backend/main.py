@@ -29,6 +29,7 @@ from backend.api import (
 )
 from backend.config import settings
 from backend.database import init_db
+from backend.utils import language
 from backend.utils.logger import configure_logging, get_logger
 
 logger = get_logger("shifa.main")
@@ -85,6 +86,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def language_middleware(request, call_next):
+    """Remember the UI language for this request (used to localise AI replies)."""
+    token = language.current_lang.set(language.normalise(request.headers.get("x-lang")))
+    try:
+        return await call_next(request)
+    finally:
+        language.current_lang.reset(token)
+
 
 for module in (
     chat_routes,

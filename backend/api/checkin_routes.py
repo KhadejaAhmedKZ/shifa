@@ -21,6 +21,7 @@ from backend.config import settings
 from backend.database import get_db
 from backend.models import CheckIn
 from backend.services import checkin_service, patient_service
+from backend.utils import language
 
 router = APIRouter(prefix="/checkin", tags=["checkin"])
 
@@ -253,7 +254,8 @@ async def explain(checkin_id: int, payload: ExplainRequest, db: Session = Depend
     if not c:
         raise HTTPException(status_code=404, detail="Check-in not found")
     patient = patient_service.get_patient(db, c.patient_id)
-    ar = payload.lang.lower().startswith("ar")
+    lang = language.normalise(payload.lang)
+    ar = lang == "ar"
     analysis = checkin_service.analyse(checkin_service.list_checkins(db, c.patient_id))
     fallback = _offline_explanation(c, analysis, ar)
 
@@ -279,7 +281,7 @@ async def explain(checkin_id: int, payload: ExplainRequest, db: Session = Depend
         "changes_from_baseline": [a["message_en"] for a in analysis["alerts"]],
     }
     prompt = (
-        f"Reply in {'Modern Standard Arabic (simple, warm)' if ar else 'plain English'}.\n"
+        f"Reply in {language.NAMES.get(lang, 'plain English')}.\n"
         f"Check-in facts (null means not measured):\n{facts}"
     )
     data = await gemini.generate_json(prompt, system_instruction=EXPLAIN_SYSTEM, temperature=0.4)

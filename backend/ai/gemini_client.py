@@ -15,6 +15,7 @@ import json
 import logging
 
 from backend.config import settings
+from backend.utils.language import instruction as lang_instruction
 
 logger = logging.getLogger("shifa.gemini")
 
@@ -53,7 +54,7 @@ class GeminiClient:
                 model=self._model,
                 contents=prompt,
                 config=types.GenerateContentConfig(
-                    system_instruction=system_instruction or None,
+                    system_instruction=((system_instruction or "") + lang_instruction()) or None,
                     temperature=temperature,
                 ),
             )
@@ -81,7 +82,7 @@ class GeminiClient:
                 model=self._model,
                 contents=[image_part, prompt],
                 config=types.GenerateContentConfig(
-                    system_instruction=system_instruction or None,
+                    system_instruction=((system_instruction or "") + lang_instruction()) or None,
                     temperature=temperature,
                 ),
             )
@@ -106,7 +107,7 @@ class GeminiClient:
                 model=self._model,
                 contents=prompt,
                 config=types.GenerateContentConfig(
-                    system_instruction=system_instruction or None,
+                    system_instruction=((system_instruction or "") + lang_instruction()) or None,
                     temperature=temperature,
                     response_mime_type="application/json",
                 ),

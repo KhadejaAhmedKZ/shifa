@@ -4,6 +4,8 @@ import { ShieldCheck, Volume2, Square, Sparkles, Info, Users, RotateCcw } from "
 import { useAuth } from "../context/AuthContext.jsx";
 import { api } from "../api/client.js";
 import { useLang } from "../context/LanguageContext.jsx";
+import LangSwitch from "../components/LangSwitch.jsx";
+import { speechLang } from "../i18n/translator.js";
 import { strings } from "../data/checkinStrings.js";
 import { toCheckinPayload } from "../lib/vitalsSummary.js";
 import VitalsScan, { VitalTile } from "../components/checkin/VitalsScan.jsx";
@@ -63,7 +65,7 @@ export default function CheckIn() {
     if (!window.speechSynthesis || !explain) return;
     if (speaking) { window.speechSynthesis.cancel(); setSpeaking(false); return; }
     const u = new SpeechSynthesisUtterance(`${explain.explanation} ${t("habitTitle")}: ${explain.habit}`);
-    u.lang = lang === "ar" ? "ar-SA" : "en-US";
+    u.lang = speechLang(lang);
     u.rate = 0.92;
     u.onend = () => setSpeaking(false);
     setSpeaking(true);
@@ -79,17 +81,14 @@ export default function CheckIn() {
   const steps = [t("step1"), t("step2"), t("step3")];
 
   return (
-    <div className="grid checkin" style={{ gap: 20 }} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>
+    <div className="grid checkin" style={{ gap: 20 }} dir={lang === "en" ? "ltr" : "rtl"} lang={lang}>
       <div className="page-head row between" style={{ flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
         <div>
           <h1>🩺 {t("title")}</h1>
           <p>{t("subtitle")}</p>
         </div>
         <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
-          <div className="checkin-lang" role="group" aria-label="Language">
-            <button className={lang === "en" ? "active" : ""} onClick={() => switchLang("en")}>English</button>
-            <button className={lang === "ar" ? "active" : ""} onClick={() => switchLang("ar")}>العربية</button>
-          </div>
+          <LangSwitch onChange={switchLang} />
           <Link className="btn secondary sm" to="/check-in/about"><Info size={15} /> {t("howItWorks")}</Link>
         </div>
       </div>

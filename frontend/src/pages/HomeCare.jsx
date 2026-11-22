@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
@@ -6,7 +7,7 @@ import { EmptyState, ErrorNote } from "../components/ui.jsx";
 
 const STATUS_BADGE = { confirmed: "green", requested: "amber", completed: "gray", cancelled: "red" };
 const fmtSlot = (iso) =>
-  new Date(iso).toLocaleString(undefined, { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+  new Date(iso).toLocaleString(appLocale(), { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
 
 export default function HomeCare() {
   const { user } = useAuth();

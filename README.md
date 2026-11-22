@@ -35,6 +35,22 @@
 
 The longevity checks are the first section on the patient dashboard.
 
+### Languages: English · العربية · اردو
+- The language menu in the top bar switches the **whole website** (every page, menu, button and
+  label) between English, Arabic and Urdu, with a right-to-left layout for Arabic and Urdu.
+  Dates follow the language, and AI replies (chat, coordinator, check-in explanations, AI Coach)
+  come back in the chosen language — the frontend sends `X-Lang` with every API call.
+- How it works: `frontend/src/i18n/translator.js` translates the rendered page in place from
+  `src/i18n/ar.json` / `ur.json` (numbers are kept, English is restored on switch-back). Mark
+  anything that must not be translated with `translate="no"`.
+- After adding or changing UI text, refresh the dictionaries:
+  ```bash
+  cd frontend
+  node scripts/i18n/extract.mjs        # collect English UI strings → scripts/i18n/strings.json
+  node scripts/i18n/translate.mjs      # translate new strings with Gemini (needs GEMINI_API_KEY in ../.env)
+  ```
+  The translations are machine-generated (Gemini) and should be reviewed by a native speaker.
+
 ### 3-minute demo flow
 1. Log in as `sara@example.com` → **Daily Check-in** → 30-second scan → Continue.
 2. Calibrate posture, do two sit-to-stands → **Finish & see my results**.

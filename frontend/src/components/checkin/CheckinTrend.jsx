@@ -1,3 +1,4 @@
+import { appLocale } from "../../i18n/translator.js";
 import { useEffect, useState } from "react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine, Legend } from "recharts";
 import { TrendingUp, TrendingDown, Minus, ShieldCheck } from "lucide-react";
@@ -45,7 +46,7 @@ export function BaselineChips({ analysis, t }) {
 /** Line chart of check-ins over time with the personal heart-rate baseline. */
 export function TrendChart({ checkins, analysis, t, lang = "en", height = 240 }) {
   const data = (checkins || []).map((c) => ({
-    when: new Date(c.created_at + (c.created_at.endsWith("Z") ? "" : "Z")).toLocaleDateString(lang === "ar" ? "ar-AE" : undefined, { month: "short", day: "numeric" }),
+    when: new Date(c.created_at + (c.created_at.endsWith("Z") ? "" : "Z")).toLocaleDateString(({ ar: "ar-AE", ur: "ur-PK" })[lang], { month: "short", day: "numeric" }),
     hr: c.heart_rate, rr: c.respiratory_rate, posture: c.posture_score,
   }));
   if (!data.length) return <p className="muted">{t("noHistory")}</p>;
@@ -98,7 +99,7 @@ export default function CheckinTrendCard({ patientId, patientName }) {
           <h3 className="card-title">📷 Daily Check-in trend</h3>
           <p className="card-sub">
             {patientName ? `${patientName} · ` : ""}camera wellness estimates vs their own baseline
-            {last ? ` · last check-in ${new Date(last.created_at + "Z").toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}` : ""}
+            {last ? ` · last check-in ${new Date(last.created_at + "Z").toLocaleString(appLocale(), { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}` : ""}
           </p>
         </div>
         {data && (

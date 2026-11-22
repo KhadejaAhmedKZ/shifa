@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { useNotifications } from "../hooks/useNotifications.js";
 import { flatNav } from "../nav.js";
-import { useLang } from "../context/LanguageContext.jsx";
+import { useLang, LANGUAGES } from "../context/LanguageContext.jsx";
 import AccessibilityBar from "./AccessibilityBar.jsx";
 
 const TITLES = {
@@ -120,14 +120,12 @@ export default function TopBar({ onMenu }) {
           {isDark ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
         </button>
 
-        <button
-          className="lang-select"
-          onClick={() => setLang(lang === "ar" ? "en" : "ar")}
-          title={lang === "ar" ? "Switch to English" : "التبديل إلى العربية"}
-          aria-label={lang === "ar" ? "Switch to English" : "Switch to Arabic"}
-        >
-          <Globe size={14} aria-hidden="true" /> {lang === "ar" ? "ع" : "EN"}
-        </button>
+        <label className="lang-select" title="Language / اللغة / زبان" translate="no">
+          <Globe size={14} aria-hidden="true" />
+          <select value={lang} onChange={(e) => setLang(e.target.value)} aria-label="Language">
+            {LANGUAGES.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
+          </select>
+        </label>
 
         <div style={{ position: "relative" }} ref={notifRef}>
           <button className="icon-btn" onClick={() => setNotifOpen((o) => !o)} aria-label="Notifications">

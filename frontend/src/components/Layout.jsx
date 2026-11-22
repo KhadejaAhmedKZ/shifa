@@ -4,6 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import Sidebar from "./Sidebar.jsx";
 import TopBar from "./TopBar.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
+import { useLang } from "../context/LanguageContext.jsx";
+
+const SELF_LANG_PAGES = new Set(["/check-in", "/check-in/about", "/exercise"]);
 
 export default function Layout() {
   const [open, setOpen] = useState(false);
@@ -11,6 +14,7 @@ export default function Layout() {
     try { return localStorage.getItem("shifa_sidebar_collapsed") === "1"; } catch { return false; }
   });
   const location = useLocation();
+  const [lang] = useLang();
 
   useEffect(() => {
     try { localStorage.setItem("shifa_sidebar_collapsed", collapsed ? "1" : "0"); } catch { /* ignore */ }
@@ -37,7 +41,10 @@ export default function Layout() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
             >
-              <ErrorBoundary key={location.pathname}>
+              {/* Redraw the page when the language changes so dates and other formatted
+                  values follow it. Pages that already react to the language themselves
+                  (and hold in-progress camera sessions) are not remounted. */}
+              <ErrorBoundary key={location.pathname + (SELF_LANG_PAGES.has(location.pathname) ? "" : `:${lang}`)}>
                 <Outlet />
               </ErrorBoundary>
             </motion.div>

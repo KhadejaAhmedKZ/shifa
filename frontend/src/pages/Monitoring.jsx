@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useRef, useState } from "react";
 import { motion as fm, AnimatePresence } from "framer-motion";
 import { Camera, CameraOff, Activity, Eye } from "lucide-react";
@@ -59,7 +60,7 @@ export default function Monitoring() {
     if (text === s.lastObs) return; // only log when the observation changes
     s.lastObs = text;
     setObservation(text);
-    setNotes((n) => [{ time: new Date().toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" }), text }, ...n].slice(0, 12));
+    setNotes((n) => [{ time: new Date().toLocaleTimeString(appLocale(), { hour: "2-digit", minute: "2-digit", second: "2-digit" }), text }, ...n].slice(0, 12));
   }
 
   async function startMonitoring() {
@@ -407,7 +408,7 @@ export default function Monitoring() {
               <div className="row between" key={e.id} style={{ padding: "6px 0", borderTop: "1px solid var(--border)" }}>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: ".84rem" }}>{e.label}</div>
-                  <div className="muted" style={{ fontSize: ".74rem" }}>{new Date(e.created_at).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" })}</div>
+                  <div className="muted" style={{ fontSize: ".74rem" }}>{new Date(e.created_at).toLocaleString(appLocale(), { dateStyle: "short", timeStyle: "short" })}</div>
                 </div>
                 <span className={"badge " + (e.status === "confirmed_ok" ? "green" : e.status === "detected" ? "gray" : "red")}>{e.status.replace("_", " ")}</span>
               </div>

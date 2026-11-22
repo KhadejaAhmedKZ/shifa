@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -5,7 +6,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage.js";
 import { COURSES, AUDIENCE_LABEL } from "../data/courses.js";
 
 function Certificate({ course, userName, onClose }) {
-  const date = new Date().toLocaleDateString(undefined, { dateStyle: "long" });
+  const date = new Date().toLocaleDateString(appLocale(), { dateStyle: "long" });
 
   function print() {
     const w = window.open("", "_blank", "width=900,height=650");
@@ -49,7 +50,7 @@ function Certificate({ course, userName, onClose }) {
             {course.icon} {course.title}
           </div>
           <div className="muted" style={{ fontSize: ".82rem" }}>
-            {new Date().toLocaleDateString(undefined, { dateStyle: "long" })} · {course.lessons.length} lessons
+            {new Date().toLocaleDateString(appLocale(), { dateStyle: "long" })} · {course.lessons.length} lessons
           </div>
           <div className="muted" style={{ fontSize: ".7rem", marginTop: 10 }}>
             Demo certificate — not an accredited credential

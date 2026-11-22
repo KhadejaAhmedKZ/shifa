@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -66,7 +67,7 @@ export default function Labs() {
                     {l.notes && <div className="muted" style={{ fontSize: ".76rem" }}>{l.notes}</div>}
                   </div>
                   <div style={{ fontWeight: 700 }}>{l.value} <span className="muted" style={{ fontWeight: 400, fontSize: ".8rem" }}>{l.unit}</span></div>
-                  <div className="range">ref {l.reference_range || "—"}<br /><span className="when">{new Date(l.taken_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</span></div>
+                  <div className="range">ref {l.reference_range || "—"}<br /><span className="when">{new Date(l.taken_at).toLocaleDateString(appLocale(), { month: "short", day: "numeric" })}</span></div>
                   <span className={"badge " + (STATUS_BADGE[l.status] || "gray")}>{l.status}</span>
                 </div>
               ))}

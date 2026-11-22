@@ -121,3 +121,28 @@
 .a11y-bar button.on { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--primary); }
 button.lang-select { cursor: pointer; font: inherit; font-size: .8rem; font-weight: 700; color: var(--text); }
 button.lang-select:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ---------- Language menu ---------- */
+label.lang-select { cursor: pointer; padding: 0 8px 0 12px; }
+label.lang-select select { border: 0; background: transparent; color: var(--text); font: inherit; font-weight: 700; font-size: .82rem; cursor: pointer; padding: 4px 2px; outline: none; }
+label.lang-select:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-100); }
+
+/* ---------- Right-to-left (Arabic, Urdu) ---------- */
+html[lang="ar"] body, html[lang="ur"] body { font-family: 'Noto Naskh Arabic', 'Inter', system-ui, sans-serif; }
+html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3, html[lang="ur"] h1, html[lang="ur"] h2, html[lang="ur"] h3 { font-family: 'Noto Naskh Arabic', var(--font-display); letter-spacing: 0; }
+html[lang="ur"] body { line-height: 1.75; }
+[dir="rtl"] .sidebar { border-right: 0; border-left: 1px solid var(--border); }
+[dir="rtl"] .topbar-search .search-ico { left: auto; right: 13px; }
+[dir="rtl"] .topbar-search input { padding: 9px 34px 9px 12px; }
+[dir="rtl"] .search-results, [dir="rtl"] .dropdown-panel { left: auto; right: 0; }
+[dir="rtl"] .dot-badge, [dir="rtl"] .sidebar-badge { right: auto; left: -4px; }
+/* charts, maths and the camera views keep their natural left-to-right layout */
+[dir="rtl"] .recharts-wrapper, [dir="rtl"] .recharts-responsive-container { direction: ltr; }
+[dir="rtl"] input[type="email"], [dir="rtl"] input[type="password"], [dir="rtl"] input[type="tel"] { direction: ltr; text-align: right; }
+@media (max-width: 900px) {
+  [dir="rtl"] .sidebar { right: 0; left: auto; transform: translateX(100%); }
+  [dir="rtl"] .sidebar.open { transform: translateX(0); }
+}
+label.lang-select select { width: auto; min-width: 4.8rem; appearance: auto; color: var(--text); }
+html[lang="ar"] body, html[lang="ur"] body { font-family: 'Inter', 'Noto Naskh Arabic', system-ui, sans-serif; }
+html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3, html[lang="ur"] h1, html[lang="ur"] h2, html[lang="ur"] h3 { font-family: 'Lexend', 'Noto Naskh Arabic', system-ui, sans-serif; }

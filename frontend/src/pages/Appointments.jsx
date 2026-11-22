@@ -1,3 +1,4 @@
+import { appLocale } from "../i18n/translator.js";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -68,7 +69,7 @@ export default function Appointments() {
     } catch (e) { setError(e.message); toast.error(e.message); }
   }
 
-  const fmt = (iso) => new Date(iso).toLocaleString(undefined, { dateStyle: "full", timeStyle: "short" });
+  const fmt = (iso) => new Date(iso).toLocaleString(appLocale(), { dateStyle: "full", timeStyle: "short" });
 
   return (
     <div className="grid" style={{ gap: 22 }}>

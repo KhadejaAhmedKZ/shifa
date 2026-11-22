@@ -1,3 +1,4 @@
+import { speechLang } from "../i18n/translator.js";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 const AccessibilityContext = createContext(null);
@@ -36,6 +37,7 @@ export function AccessibilityProvider({ children }) {
     if (!("speechSynthesis" in window) || !text) return;
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = speechLang(document.documentElement.lang || "en");
     utter.rate = 0.98;
     window.speechSynthesis.speak(utter);
   }, []);
