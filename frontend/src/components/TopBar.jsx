@@ -12,7 +12,6 @@ import AccessibilityBar from "./AccessibilityBar.jsx";
 const TITLES = {
   "/check-in": "Daily Check-in",
   "/exercise": "Exercise",
-  "/eyelid-check": "Eyelid Colour Check",
   "/check-in/about": "How the Check-in works",
   "/": "Welcome",
   "/chat": "AI Assistant",

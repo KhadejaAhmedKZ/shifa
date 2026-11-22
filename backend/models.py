@@ -370,20 +370,3 @@ class ExerciseSession(Base):
     side: Mapped[str | None] = mapped_column(String(10), nullable=True)
     completed_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
-
-class PallorReading(Base):
-    """Eyelid colour check: relative redness of the inner lower eyelid vs the
-    person's own cheek skin (CIELAB a* difference). Numbers only — the photo
-    is analysed on the device and never uploaded or stored."""
-
-    __tablename__ = "pallor_readings"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    patient_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, index=True)
-    eyelid_index: Mapped[float] = mapped_column(Float)    # eyelid a*
-    skin_index: Mapped[float] = mapped_column(Float)      # cheek a*
-    relative_index: Mapped[float] = mapped_column(Float)  # eyelid − skin; lower = paler
-    quality: Mapped[float] = mapped_column(Float)         # 0..1
-    source: Mapped[str] = mapped_column(String(20), default="camera")  # camera | demo
-    drift_alerted: Mapped[bool] = mapped_column(Boolean, default=False)

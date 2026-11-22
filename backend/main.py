@@ -14,7 +14,6 @@ from backend.api import (
     care_market_routes,
     checkin_routes,
     exercise_routes,
-    pallor_routes,
     coordinator_routes,
     meal_routes,
     monitoring_routes,
@@ -104,7 +103,6 @@ for module in (
     monitoring_routes,
     checkin_routes,
     exercise_routes,
-    pallor_routes,
 ):
     app.include_router(module.router)
 

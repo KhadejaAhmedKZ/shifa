@@ -12,7 +12,6 @@ import { extractVital, computeHealthScore } from "../utils/wellness.js";
 // Shifa's main longevity features — shown first on the dashboard.
 const LONGEVITY = [
   { to: "/check-in", icon: "🩺", title: "Daily Check-in", sub: "30-sec camera scan of heart & breathing rate, plus a posture check.", tag: "DAILY", bg: "linear-gradient(135deg,#2563eb,#06b6d4)" },
-  { to: "/eyelid-check", icon: "👁️", title: "Eyelid Colour Check", sub: "Weekly 1-minute photo — an early prompt to ask about anemia.", tag: "NEW · WEEKLY", bg: "linear-gradient(135deg,#e11d48,#f97316)" },
   { to: "/exercise", icon: "🏃", title: "Exercise", sub: "Camera coach for squats, curls & lunges, plus your AI Coach.", tag: "STRENGTH", bg: "linear-gradient(135deg,#14b8a6,#22c55e)" },
 ];
 

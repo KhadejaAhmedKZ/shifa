@@ -9,7 +9,6 @@ import { useLocalStorage } from "../hooks/useLocalStorage.js";
 import { useVoice } from "../hooks/useVoice.js";
 import { api } from "../api/client.js";
 import CheckinTrendCard from "../components/checkin/CheckinTrend.jsx";
-import PallorTrendCard from "../components/pallor/PallorTrend.jsx";
 import Markdown from "../components/Markdown.jsx";
 import VideoVisit from "../components/VideoVisit.jsx";
 import BodyFigure, { intensityColor } from "../components/BodyFigure.jsx";
@@ -496,7 +495,6 @@ export default function DoctorDashboard() {
               </div>
 
               <CheckinTrendCard patientId={selectedPatient.id} patientName={selectedPatient.name} />
-              <PallorTrendCard patientId={selectedPatient.id} patientName={selectedPatient.name} />
 
               <div className="tabs">
                 <button className={"tab" + (detailTab === "summary" ? " active" : "")} onClick={() => setDetailTab("summary")}>🧠 AI Summary</button>

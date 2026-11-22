@@ -30,7 +30,6 @@ import {
   HeartHandshake,
   ScanFace,
   Dumbbell,
-  Eye,
   Info,
 } from "lucide-react";
 
@@ -41,7 +40,6 @@ export const NAV = {
       items: [
         { to: "/", icon: Home, label: "Home", end: true },
         { to: "/check-in", icon: ScanFace, label: "Daily Check-in", end: true },
-        { to: "/eyelid-check", icon: Eye, label: "Eyelid Colour Check" },
         { to: "/exercise", icon: Dumbbell, label: "Exercise" },
         { to: "/coordinator", icon: Sparkles, label: "Care Coordinator" },
         { to: "/chat", icon: MessageCircleMore, label: "AI Assistant" },
